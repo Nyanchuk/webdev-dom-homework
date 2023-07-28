@@ -78,6 +78,8 @@
     //Добавляем рендер-функцию для комментариев:
     const comentElement = document.querySelectorAll('.comment');
 
+    
+
     const coments = [
       {
         name:"Глеб Фокин",
@@ -93,7 +95,28 @@
         likes:"74",
         liked: false,
       }
-    ]
+    ];
+
+    const like = () =>{
+          document.querySelectorAll('.like-button').forEach(function(likeButton) {
+            let likeCount = likeButton.previousElementSibling;
+            let likes = Number(likeCount.textContent);
+            let liked = false;
+            likeButton.addEventListener('click', function() {
+              if (liked === false) {
+                likes++;
+                liked = true;
+                likeButton.classList.add('-active-like');
+              } else {
+                likes--;
+                liked = false;
+                likeButton.classList.remove('-active-like');
+              }
+              likeCount.textContent = likes;
+            });
+          });
+        };
+
       const render = () => {
         const comHtml = coments.map((coment) =>{
           return `<li class="comment">
@@ -109,36 +132,37 @@
           <div class="comment-footer">
             <div class="likes">
               <span class="likes-counter">${coment.likes}</span>
-              <button class="like-button"></button>
+              <button class="like-button ${coment.Liked ? '-active-like' : ''}"></button>
             </div>
           </div>
         </li>`
         
         }).join('');
         listElement.innerHTML = comHtml;
+        like();
       };
-      
       render()
-      const like = () =>{
-        document.querySelectorAll('.like-button').forEach(function(likeButton) {
-          let likeCount = likeButton.previousElementSibling;
-          let likes = Number(likeCount.textContent);
-          let liked = false;
-          likeButton.addEventListener('click', function() {
-            if (liked === false) {
-              likes++;
-              liked = true;
-              likeButton.classList.add('-active-like');
-            } else {
-              likes--;
-              liked = false;
-              likeButton.classList.remove('-active-like');
-            }
-            likeCount.textContent = likes;
-          });
-        });
-      };
-      like();
+      
+     
+
+      //Код ниже относится к домашке DOM3
+    //   const quote = () => {
+    //   const comment = document.querySelectorAll('.comment');
+    //   comment.forEach(function(comment) {
+    //     comment.addEventListener('click', () => {
+    //       const actualComent = comInputElement.value;
+    //       const clickComent = comment.textContent.trim();
+    //       const newComent = actualComent ? actualComent + ' ' + clickComent:
+    //       comInputElement.value = newComent;
+    //     });
+    //   });
+    //   function handReply(event) {
+    //     const commentDate = event.target.dataset.comment;
+    //     const nameInputElement = document.getElementById('text_input');
+    //     comInputElement.value = commentDate;
+    //   }
+    // }
+    // quote()
       
       //Активируем функцию добавления комментария на страницу сайта:
       buttonElement.addEventListener('click' , () => {
@@ -160,13 +184,14 @@
       coments.push({
         name: nameInputElement.value,
         data: date(new Date()),
-        com: comInputElement.value,
+        com: comInputElement.value.replaceAll('<', '&lt').replaceAll('>', '&gt'),
         likes:"0",
         liked: false,
       })
         render();
-        like();
+       
+        // quote()
+        
     });
-  
   </script>
 </html>
