@@ -115,7 +115,7 @@
         }
       };
    
-
+// ПЕРВЫЙ КОД БЕЗ stopPropagation
   // const quote = () => {
   //   const commentTexts = document.querySelectorAll('.comment-text');
   //   const inputField = document.querySelector('.add-form-text');
@@ -155,14 +155,15 @@
   //   };
   //   render()
 
+  //ВТОРОЙ КОД С stopPropagation
   const quote = () => {
     const commentTexts = document.querySelectorAll('.comment');
     const inputField = document.querySelector('.add-form-text');
-    const NameData = document.querySelector('.comment-header');
     commentTexts.forEach(commentText => {
-      commentText.addEventListener('click', () => {
+      commentText.addEventListener('click', (event) => {
+        event.stopPropagation();
         inputField.value = '>'+ ' ' + commentText.innerText;
-        // Где-то здесь нужно поставить stopPropsgstion()
+      //  ???
         render();
       });
     });
