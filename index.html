@@ -114,22 +114,60 @@
           });
         }
       };
-      like()
+   
+
+  // const quote = () => {
+  //   const commentTexts = document.querySelectorAll('.comment-text');
+  //   const inputField = document.querySelector('.add-form-text');
+  //   const NameData = document.querySelector('.comment-header');
+  //   commentTexts.forEach(commentText => {
+  //     commentText.addEventListener('click', () => {
+  //       inputField.value = '>'+ ' ' + commentText.innerText + ' (' + NameData.innerText + ')';
+  //       render();
+  //     });
+  //   });
+  // };
+
+
+  //   const render = () => {
+  //     const comHtml = coments.map((coment, index) =>{
+  //       return `<li class="comment" >
+  //         <div class="comment-header">
+  //           <div>${coment.name}</div>
+  //           <div>${coment.data}</div>
+  //         </div>
+  //         <div class="comment-body">
+  //           <div class="comment-text">
+  //             ${coment.com}
+  //           </div>
+  //         </div>
+  //         <div class="comment-footer">
+  //           <div class="likes">
+  //             <span class="likes-counter">${coment.likes}</span>
+  //             <button class="like-button ${coment.liked ? '-active-like' : ''}" data-index = ${index}></button>
+  //           </div>
+  //         </div>
+  //       </li>`
+  //     }).join('');
+  //     listElement.innerHTML = comHtml;
+  //     like();
+  //     quote()
+  //   };
+  //   render()
 
   const quote = () => {
-    const commentTexts = document.querySelectorAll('.comment-text');
+    const commentTexts = document.querySelectorAll('.comment');
     const inputField = document.querySelector('.add-form-text');
     const NameData = document.querySelector('.comment-header');
     commentTexts.forEach(commentText => {
       commentText.addEventListener('click', () => {
-        inputField.value = '>'+ ' ' + commentText.innerText + ' (' + NameData.innerText + ')';
+        inputField.value = '>'+ ' ' + commentText.innerText;
+        // Где-то здесь нужно поставить stopPropsgstion()
         render();
       });
     });
   };
-quote();
-
-    const render = () => {
+  const render = () => {
       const comHtml = coments.map((coment, index) =>{
         return `<li class="comment" >
           <div class="comment-header">
@@ -155,7 +193,6 @@ quote();
     };
     render()
 
-    
       
       //Активируем функцию добавления комментария на страницу сайта:
       buttonElement.addEventListener('click' , () => {
