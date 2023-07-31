@@ -99,7 +99,8 @@
     const like = () => {
       const likeButtons = document.querySelectorAll('.like-button');
       for(const like of likeButtons){
-        like.addEventListener('click', () => {
+        like.addEventListener('click', (event) => {
+          event.stopPropagation();
           const com = coments[like.dataset.index];
           let a = like.likes;
           if (com.liked === false) {
@@ -115,7 +116,7 @@
         }
       };
    
-// ПЕРВЫЙ КОД БЕЗ stopPropagation
+// ПЕРВЫЙ КОД
   // const quote = () => {
   //   const commentTexts = document.querySelectorAll('.comment-text');
   //   const inputField = document.querySelector('.add-form-text');
@@ -128,47 +129,40 @@
   //   });
   // };
 
-
-  //   const render = () => {
-  //     const comHtml = coments.map((coment, index) =>{
-  //       return `<li class="comment" >
-  //         <div class="comment-header">
-  //           <div>${coment.name}</div>
-  //           <div>${coment.data}</div>
-  //         </div>
-  //         <div class="comment-body">
-  //           <div class="comment-text">
-  //             ${coment.com}
-  //           </div>
-  //         </div>
-  //         <div class="comment-footer">
-  //           <div class="likes">
-  //             <span class="likes-counter">${coment.likes}</span>
-  //             <button class="like-button ${coment.liked ? '-active-like' : ''}" data-index = ${index}></button>
-  //           </div>
-  //         </div>
-  //       </li>`
-  //     }).join('');
-  //     listElement.innerHTML = comHtml;
-  //     like();
-  //     quote()
-  //   };
-  //   render()
-
-  //ВТОРОЙ КОД С stopPropagation
+// ВТОРОЙ КОД
   const quote = () => {
-    const commentTexts = document.querySelectorAll('.comment');
+    const coment = document.querySelectorAll('.comment');
     const inputField = document.querySelector('.add-form-text');
-    commentTexts.forEach(commentText => {
-      commentText.addEventListener('click', (event) => {
-        event.stopPropagation();
-        inputField.value = '>'+ ' ' + commentText.innerText;
-      //  ???
+    const NameData = document.querySelector('.comment-header');
+    const like = document.querySelector('.comment-footer');
+    coment.forEach(coment => {
+      coment.addEventListener('click', () => {
+        like.remove();
+        inputField.value = '>'+ ' ' + coment.innerText + ' ';
         render();
       });
     });
   };
-  const render = () => {
+
+
+//   const quote = () => {
+//     const commentTexts = document.querySelectorAll('.comment-text');
+//     const inputField = document.querySelector('.add-form-text');
+//     const NameData = document.querySelector('.comment-header');
+//     commentTexts.forEach(commentText => {
+//         commentText.addEventListener('click', (event) => {
+//             event.stopPropagation();
+//             inputField.value = '>'+ ' ' + commentText.innerText + ' (' + NameData.innerText + ')';
+//             render();
+//         });
+//     });
+//     NameData.addEventListener('click', (event) => {
+//         event.stopPropagation();
+//         inputField.value = '>'+ ' ' + NameData.innerText;
+//         render();
+//     });
+// };
+    const render = () => {
       const comHtml = coments.map((coment, index) =>{
         return `<li class="comment" >
           <div class="comment-header">
@@ -193,6 +187,9 @@
       quote()
     };
     render()
+
+  
+  
 
       
       //Активируем функцию добавления комментария на страницу сайта:
