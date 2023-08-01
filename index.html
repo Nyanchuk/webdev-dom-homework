@@ -98,70 +98,37 @@
 
     const like = () => {
       const likeButtons = document.querySelectorAll('.like-button');
-      for(const like of likeButtons){
-        like.addEventListener('click', (event) => {
-          event.stopPropagation();
-          const com = coments[like.dataset.index];
-          let a = like.likes;
-          if (com.liked === false) {
-              com.liked = true;
-              like.classList.add("-active-like")
-              com.likes++;
-            } else if (com.liked === true) {
-              com.liked = false
-              com.likes--;
-            }
-            render(); 
-          });
-        }
-      };
-   
-// ПЕРВЫЙ КОД
-  // const quote = () => {
-  //   const commentTexts = document.querySelectorAll('.comment-text');
-  //   const inputField = document.querySelector('.add-form-text');
-  //   const NameData = document.querySelector('.comment-header');
-  //   commentTexts.forEach(commentText => {
-  //     commentText.addEventListener('click', () => {
-  //       inputField.value = '>'+ ' ' + commentText.innerText + ' (' + NameData.innerText + ')';
-  //       render();
-  //     });
-  //   });
-  // };
+        for(const like of likeButtons){
+          like.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const com = coments[like.dataset.index];
+            let a = like.likes;
+            if (com.liked === false) {
+                com.liked = true;
+                like.classList.add("-active-like")
+                com.likes++;
+              } else if (com.liked === true) {
+                com.liked = false
+                com.likes--;
+              }
+              render(); 
+            });
+          }
+        };
 
-// ВТОРОЙ КОД
-  const quote = () => {
-    const coment = document.querySelectorAll('.comment');
-    const inputField = document.querySelector('.add-form-text');
-    const NameData = document.querySelector('.comment-header');
-    const like = document.querySelector('.comment-footer');
-    coment.forEach(coment => {
-      coment.addEventListener('click', () => {
-        like.remove();
-        inputField.value = '>'+ ' ' + coment.innerText + ' ';
-        render();
+    const quote = () => {
+      const coment = document.querySelectorAll('.comment');
+      const commentTexts = document.querySelectorAll('.comment-text');
+      const commentHeaders = document.querySelectorAll('.comment-header');
+      const inputField = document.querySelector('.add-form-text');
+      coment.forEach((coment, index) => {
+        coment.addEventListener('click', () => {
+          inputField.value = '>'+ ' ' + commentTexts[index].innerText + ' (' + commentHeaders[index].innerText+ ')';
+          render();
+        });
       });
-    });
-  };
+    };
 
-
-//   const quote = () => {
-//     const commentTexts = document.querySelectorAll('.comment-text');
-//     const inputField = document.querySelector('.add-form-text');
-//     const NameData = document.querySelector('.comment-header');
-//     commentTexts.forEach(commentText => {
-//         commentText.addEventListener('click', (event) => {
-//             event.stopPropagation();
-//             inputField.value = '>'+ ' ' + commentText.innerText + ' (' + NameData.innerText + ')';
-//             render();
-//         });
-//     });
-//     NameData.addEventListener('click', (event) => {
-//         event.stopPropagation();
-//         inputField.value = '>'+ ' ' + NameData.innerText;
-//         render();
-//     });
-// };
     const render = () => {
       const comHtml = coments.map((coment, index) =>{
         return `<li class="comment" >
