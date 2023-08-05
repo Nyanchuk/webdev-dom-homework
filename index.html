@@ -140,11 +140,13 @@
     }
 
     const render = () => {
-      const comHtml = coments.map((coment, index) =>{
+      const comHtml = coments.map((coment, index) => {
+        const commentDate = new Date(coment.date);
+        const timeDate = commentDate.toLocaleDateString() + ' ' +commentDate.getHours() + ':' + commentDate.getMinutes();
         return `<li class="comment" >
           <div class="comment-header">
             <div>${coment.author.name}</div>
-            <div>${coment.date}</div>
+            <div>${timeDate}</div>
           </div>
           <div class="comment-body">
             <div class="comment-text">
