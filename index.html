@@ -75,7 +75,9 @@
     const comInputElement = document.getElementById("com-input");
     const comentElement = document.querySelectorAll('.comment');
     
-    const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+    // Функция get API позволяет получать данные с сервера
+    const getAPI = () => {
+      const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
       method: "GET",
     });
     fetchPromise.then((response) => {
@@ -86,7 +88,10 @@
         render();
       });
     })
+  }
+  getAPI();
 
+  // Функция post API позволяет отправлять данные на сервер
     const postAPI = (nameInputElement, comInputElement) => {
       return fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
         method: "POST", 
@@ -95,38 +100,40 @@
           name: nameInputElement.value
         })
       }).then(() => {
-        fetchPromise();
+        
+        getAPI();
       })
     }
 
     let coments = [];
 
+    
     const like = () => {
       const likeButtons = document.querySelectorAll('.like-button');
         for(const like of likeButtons){
           like.addEventListener('click', (event) => {
             event.stopPropagation();
             const com = coments[like.dataset.index];
-            let a = like.likes;
+            let a = com.likes;
             if (com.isliked === false) {
                 com.isliked = true;
-                like.classList.add("-active-like")
+                like.classList.add("-active-like");
                 com.likes++;
               } else if (com.isliked === true) {
                 com.isliked = false
                 com.likes--;
-              }
-              render(); 
+            }
+            render(); 
             });
           }
         };
-
+        
     
     const quote = () => {
       const coment = document.querySelectorAll('.comment');
       coment.forEach((coment, index) => {
         coment.addEventListener('click', () => {
-          comInputElement.value = '>'+ ' ' + coments[index].text + ' (' + coments[index].author + ')';
+          comInputElement.value = '>'+ ' ' + coments[index].text + ' (' + coments[index].author.name + ')';
           render();
         })
       })
@@ -157,6 +164,8 @@
       quote()
     };
     render()
+
+    
 
     buttonElement.addEventListener('click' , () => {
     nameInputElement.classList.remove('error');
@@ -194,7 +203,7 @@
 
 
 
-// НИЖЕ ОБЫЧНЫЙ КОД БЕЗ API
+// НИЖЕ ОБЫЧНЫЙ КОД БЕЗ API (DOM1 DOM2 DOM3)
 
 
     // const buttonElement = document.getElementById("add-button");
