@@ -3,25 +3,20 @@ const listElement = document.getElementById("list");
 const nameInputElement = document.getElementById("name-input");
 const comInputElement = document.getElementById("com-input");
 const comentElement = document.querySelectorAll('.comment');
-const loadingElement = document.createElement('p');
 
-// Добавляем новый элемент на страницу:
-loadingElement.textContent = 'Комментарии загружаются...';
-listElement.appendChild(loadingElement);
-
-
-    const getAPI = () => {
-        fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
-          method: "GET",
-        })
-          .then((response) => response.json())
-          .then((responseData) => {
+const getAPI = () => {
+    fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+        method: "GET",
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
             console.log(responseData);
             coments = responseData.comments;
+            //Закрытие события при отправке комментария
+            buttonElement.disabled = false;
+            buttonElement.textContent = "Написать";
             render();
-            // Удаляем элемент после получения ответа от сервера:
-          });
-          listElement.removeChild(loadingElement);
+          }); 
       };
       getAPI();
 
@@ -34,7 +29,6 @@ listElement.appendChild(loadingElement);
         }),
     })
     .then(() => getAPI())
-    .catch((error) => console.error(error));
     };
 
     let coments = [];
@@ -105,10 +99,10 @@ listElement.appendChild(loadingElement);
             return;
         } 
         comInputElement.classList.remove('error');
-
-        // buttonElement.disabled = true;
-        // buttonElement.textContent = 'Элемент добавляется...'
-
+        //Открытие события при отправке комментария
+        buttonElement.disabled = true;
+        buttonElement.textContent = "Ваш комментарий добавлятся...";
+        
         function date(newDate) {
             let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
             return fullHour;
@@ -122,7 +116,18 @@ listElement.appendChild(loadingElement);
 
 
 
-
+//Код для пост-апи
+ // const postAPI = (nameInputElement, comInputElement) => {
+    //     fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //         text: comInputElement.value,
+    //         name: nameInputElement.value,
+    //     }),
+    // })
+    // .then(() => getAPI())
+    // .catch((error) => console.error(error));
+    // };
 
 
 
