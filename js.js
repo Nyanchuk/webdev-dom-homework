@@ -3,36 +3,39 @@ const listElement = document.getElementById("list");
 const nameInputElement = document.getElementById("name-input");
 const comInputElement = document.getElementById("com-input");
 const comentElement = document.querySelectorAll('.comment');
-    
-    // Функция getAPI позволяет получать данные с сервера
-    const getAPI = () => {
-      const fetchPromise = fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
-      method: "GET",
-    });
-    fetchPromise.then((response) => {
-      const jsonPromise = response.json();
-      jsonPromise.then((responseData) => {
-        console.log(responseData);
-        coments = responseData.comments;
-        render();
-      });
-    })
-  }
-  getAPI();
+const loadingElement = document.createElement('p');
 
-  // Функция postAPI позволяет отправлять данные на сервер
-    const postAPI = (nameInputElement, comInputElement) => {
-      return fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
-        method: "POST", 
-        body: JSON.stringify({
-          text: comInputElement.value,
-          name: nameInputElement.value
+// Добавляем новый элемент на страницу:
+loadingElement.textContent = 'Комментарии загружаются...';
+listElement.appendChild(loadingElement);
+
+
+    const getAPI = () => {
+        fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+          method: "GET",
         })
-      }).then(() => {
-        
-        getAPI();
-      })
-    }
+          .then((response) => response.json())
+          .then((responseData) => {
+            console.log(responseData);
+            coments = responseData.comments;
+            render();
+            // Удаляем элемент после получения ответа от сервера:
+          });
+          listElement.removeChild(loadingElement);
+      };
+      getAPI();
+
+    const postAPI = (nameInputElement, comInputElement) => {
+        fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+        method: "POST",
+        body: JSON.stringify({
+            text: comInputElement.value,
+            name: nameInputElement.value,
+        }),
+    })
+    .then(() => getAPI())
+    .catch((error) => console.error(error));
+    };
 
     let coments = [];
 
@@ -55,26 +58,6 @@ const comentElement = document.querySelectorAll('.comment');
             });
           }
         };
-
-    // const like = () => {
-    //     const likeButtons = document.querySelectorAll('.like-button');
-    //     likeButtons.forEach((like) => {
-    //       like.addEventListener('click', (event) => {
-    //         event.stopPropagation();
-    //         const com = coments[like.dataset.index];
-    //         let a = com.likes;
-    //         if (com.isLiked === false) {
-    //           com.isLiked = true;
-    //           like.classList.add("-active-like");
-    //           com.likes++;
-    //         } else if (com.isLiked === true) {
-    //           com.isLiked = false
-    //           com.likes--;
-    //         }
-    //         render(); 
-    //       });
-    //     });
-    //   };
 
     const quote = () => {
       const coment = document.querySelectorAll('.comment');
@@ -122,12 +105,17 @@ const comentElement = document.querySelectorAll('.comment');
             return;
         } 
         comInputElement.classList.remove('error');
+
+        // buttonElement.disabled = true;
+        // buttonElement.textContent = 'Элемент добавляется...'
+
         function date(newDate) {
             let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
             return fullHour;
             }
         date(new Date())
         postAPI(nameInputElement, comInputElement);
+        
     });
 
 
