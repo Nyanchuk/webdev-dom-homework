@@ -4,6 +4,12 @@ const nameInputElement = document.getElementById("name-input");
 const comInputElement = document.getElementById("com-input");
 const comentElement = document.querySelectorAll('.comment');
 
+// Добавляем надпись перед загрузкой комментария:
+const loadingElement = document.createElement("div");
+loadingElement.textContent = "Пожалуйста подождите, комментарии загружаются...";
+document.body.appendChild(loadingElement);
+
+
 const getAPI = () => {
     fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
         method: "GET",
@@ -102,14 +108,13 @@ const getAPI = () => {
         //Открытие события при отправке комментария
         buttonElement.disabled = true;
         buttonElement.textContent = "Ваш комментарий добавлятся...";
-        
+
         function date(newDate) {
             let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
             return fullHour;
             }
         date(new Date())
         postAPI(nameInputElement, comInputElement);
-        
     });
 
 
