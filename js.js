@@ -17,11 +17,14 @@ const getAPI = () => {
             buttonElement.textContent = "Написать";
             loadingElement.remove();
             render();
-          }); 
+          });
       };
       getAPI();
 
     const postAPI = (nameInputElement, comInputElement) => {
+        if(comInputElement.value.length < 3 || nameInputElement.value.length < 3) {
+            alert('Имя и комментарий должны быть не короче 3 символов');
+        }
         fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
         method: "POST",
         body: JSON.stringify({
@@ -29,7 +32,21 @@ const getAPI = () => {
             name: nameInputElement.value,
         }),
     })
+    .then((response) => {
+        console.log(response);
+        if(response.status === 201 || response.status === 400) {
+            return response.json();
+        } else {
+            return Promise.reject('Сервер упал');
+        }
+    })
     .then(() => getAPI())
+    .catch((error) => {
+        buttonElement.disabled = false;
+        buttonElement.textContent = "Написать";
+        alert('Кажется что-то пошло не так, попробуй позже')
+        console.warn(error);
+    })
     };
 
     let coments = [];
