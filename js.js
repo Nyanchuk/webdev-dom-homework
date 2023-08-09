@@ -3,12 +3,7 @@ const listElement = document.getElementById("list");
 const nameInputElement = document.getElementById("name-input");
 const comInputElement = document.getElementById("com-input");
 const comentElement = document.querySelectorAll('.comment');
-
-// Добавляем надпись перед загрузкой комментария:
-const loadingElement = document.createElement("div");
-loadingElement.textContent = "Пожалуйста подождите, комментарии загружаются...";
-document.body.appendChild(loadingElement);
-
+const loadingElement = document.querySelector('.loader');
 
 const getAPI = () => {
     fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
@@ -18,9 +13,9 @@ const getAPI = () => {
         .then((responseData) => {
             console.log(responseData);
             coments = responseData.comments;
-            //Закрытие события при отправке комментария
             buttonElement.disabled = false;
             buttonElement.textContent = "Написать";
+            loadingElement.remove();
             render();
           }); 
       };
