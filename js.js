@@ -1,29 +1,5 @@
 
 
-// const postAPI = (nameInputElement, comInputElement) => {
-//     fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
-//         method: "POST",
-//         body: JSON.stringify({
-//             text: comInputElement.value,
-//             name: nameInputElement.value,
-//         }),
-//     })
-
-//     .then((data) => {
-//         console.log(data);
-//         getAPI();
-//     })
-//     .catch((error) => {
-//         buttonElement.disabled = false;
-//         buttonElement.textContent = "Написать";
-
-       
-//     })
-// };
-
-
-
-
 const buttonElement = document.getElementById("add-button");
 const listElement = document.getElementById("list");
 const nameInputElement = document.getElementById("name-input");
@@ -58,21 +34,6 @@ const getAPI = () => {
             name: nameInputElement.value,
         }),
     })
-    // Старый код
-
-//     .then((response) => {
-//         console.log(response);
-//         if (response.status === 201) {
-//             return response.json();
-//         } else if (response.status === 400) {
-//             return response.json()
-//             .then((errorData) => { throw new Error("BadRequest: " + errorData.message); });
-//         } else if (response.status === 500) {
-//             throw new Error("ServerUnavailable: Непредвиденная ошибка сервера");
-//         } else {
-//             throw new Error("ServerError: Сервер упал");
-//         }
-//     })
     .then((response) => {
         console.log(response);
         if (response.status === 201) {
