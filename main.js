@@ -1,38 +1,92 @@
-import {
-  buttonElement,
-  listElement,
-  nameInputElement,
-  comInputElement,
-  comentElement,
-  loadingElement,
-} from './dom.js';
+import { buttonElement, listElement, nameInputElement, comInputElement, comentElement, loadingElement } from './dom.js';
+import { getTodos, postTodos } from './api.js';//части от АПИ
+import { handleErrors } from './error.js';//часть кода по ошибкам от постАПИ
+import { render, initClickHandler } from './render.js';
 
-import { getAPI, postAPI } from './api.js';
-import { like, quote, render } from './events.js';
+const getAPI = () => {
+        getTodos().then((responseData) => {
+            console.log(responseData);
+            coments = responseData.comments;
+            buttonElement.disabled = false;
+            buttonElement.textContent = "Написать";
+            loadingElement.remove();
+            render(coments);
+          });
+      };
+
+export const postAPI = (nameInputElement, comInputElement) => {   
+      postTodos({ text: comInputElement.value }, { name: nameInputElement.value })
+      .then((data) => {
+        console.log(data);
+        getAPI();
+    })
+      .catch((error) => {
+        handleErrors(error, buttonElement);
+    });
+    };
 
 let coments = [];
 
 getAPI();
+initClickHandler();
 
-buttonElement.addEventListener('click' , () => {
-          nameInputElement.classList.remove('error');
-          if(nameInputElement.value === "" || comInputElement.value === "") {
-              comInputElement.classList.add('error');
-              nameInputElement.classList.add('error');
-              return;
-          } 
-          comInputElement.classList.remove('error');
-          //Открытие события при отправке комментария
-          buttonElement.disabled = true;
-          buttonElement.textContent = "Ваш комментарий добавлятся...";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { buttonElement, listElement, nameInputElement, comInputElement, comentElement, loadingElement } from './dom.js';
+// import { getAPI, postAPI } from './api.js';
+// import { render } from './render.js';
+// import { like, quote } from './events.js';
+
+// export let coments = [];
+
+// getAPI();
+// render()
+// postAPI()
+
+
+
+// buttonElement.addEventListener('click' , () => {
+//           nameInputElement.classList.remove('error');
+//           if(nameInputElement.value === "" || comInputElement.value === "") {
+//               comInputElement.classList.add('error');
+//               nameInputElement.classList.add('error');
+//               return;
+//           } 
+//           comInputElement.classList.remove('error');
+//           //Открытие события при отправке комментария
+//           buttonElement.disabled = true;
+//           buttonElement.textContent = "Ваш комментарий добавлятся...";
   
-          function date(newDate) {
-              let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
-              return fullHour;
-              }
-          date(new Date())
-          postAPI(nameInputElement, comInputElement);
-      });
+//           function date(newDate) {
+//               let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
+//               return fullHour;
+//               }
+//           date(new Date())
+//           postAPI(nameInputElement, comInputElement);
+//       });
 
 
 

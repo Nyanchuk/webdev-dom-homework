@@ -1,7 +1,4 @@
-// import { listElement } from './main.js';
-// import { coments } from './api.js';
-
-export const like = () => {
+export const like = (coments) => {
     const likeButtons = document.querySelectorAll('.like-button');
       for(const like of likeButtons){
         like.addEventListener('click', (event) => {
@@ -21,7 +18,7 @@ export const like = () => {
         }
       };
 
-export const quote = () => {
+export  const quote = (coments) => {
     const coment = document.querySelectorAll('.comment');
     coment.forEach((coment, index) => {
       coment.addEventListener('click', () => {
@@ -30,32 +27,3 @@ export const quote = () => {
       })
     })
   }
-
-export const render = (coments, listElement, like, quote) => {
-    const comHtml = coments.map((coment, index) => {
-      const commentDate = new Date(coment.date);
-      const timeDate = commentDate.toLocaleDateString() + ' ' +commentDate.getHours() + ':' + commentDate.getMinutes();
-      return `<li class="comment" >
-        <div class="comment-header">
-          <div>${coment.author.name}</div>
-          <div>${timeDate}</div>
-        </div>
-        <div class="comment-body">
-          <div class="comment-text">
-            ${coment.text}
-          </div>
-        </div>
-        <div class="comment-footer">
-          <div class="likes">
-            <span class="likes-counter">${coment.likes}</span>
-            <button class="like-button ${coment.isLiked ? '-active-like' : ''}" data-index = ${index}></button>
-          </div>
-        </div>
-      </li>`
-    }).join('');
-    listElement.innerHTML = comHtml;
-    like();
-    quote()
-  };
-
-

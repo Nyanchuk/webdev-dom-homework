@@ -1,29 +1,16 @@
-import { buttonElement, loadingElement} from './dom.js';
-
-export const getAPI = () => {
-    fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+export function getTodos() {
+    return fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
         method: "GET",
     })
-        .then((response) => response.json())
-        .then((responseData) => {
-            console.log(responseData);
-            let coments = [];
-            coments = responseData.comments;
-            buttonElement.disabled = false;
-            buttonElement.textContent = "Написать";
-            loadingElement.remove();
-          });
-      };
+    .then((response) => response.json())
+}
 
-export const postAPI = (nameInputElement, comInputElement) => {
-        // if(comInputElement.value.length < 3 || nameInputElement.value.length < 3) {
-        //     alert('Имя и комментарий должны быть не короче 3 символов');
-        // }
-        fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
+export function postTodos({ text }, { name }) {
+    return fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
         method: "POST",
         body: JSON.stringify({
-            text: comInputElement.value,
-            name: nameInputElement.value,
+            text,
+            name,
         }),
     })
     .then((response) => {
@@ -44,25 +31,4 @@ export const postAPI = (nameInputElement, comInputElement) => {
             });
         }
     })
-    .then((data) => {
-        console.log(data);
-        getAPI();
-    })
-// Обработка возможных ошибок или исключений:
-    .catch((error) => {
-        buttonElement.disabled = false;
-        buttonElement.textContent = "Написать";
-// Обработка разных типов ошибок и отображение соответствующих сообщений для пользователя через alert():
-        if (error.message.startsWith("BadRequest:")) { // "BadRequest:", то это значит, что запрос был сформирован с некорректными данными
-            alert('Некорректные данные. Пожалуйста, заполните все поля и проверьте правильность введенной информации.');
-        } else if (error.message.startsWith("ServerUnavailable:")) {
-            alert('Сервер временно не работает. Попробуйте позднее.');
-        } else if (error.message.startsWith("ServerError:") || error.message.startsWith("Error:")) {
-            alert('Кажется что-то пошло не так. Попробуйте позже.');
-        } else {
-            alert('Неизвестная ошибка. Попробуйте еще раз.');
-        }
-// Запись информации об ошибке в консоль с функцией warn():
-        console.warn(error);
-    })
-    };
+}
