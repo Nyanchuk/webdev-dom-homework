@@ -1,7 +1,7 @@
 import { listElement } from './dom.js';
 import { like, quote } from './events.js';
 import { buttonElement, nameInputElement, comInputElement } from './dom.js';
-import { postAPI } from './main.js';
+import { postAPI } from './api.js';
 
 const render = (coments) => {
     const comHtml = coments.map((coment, index) => {

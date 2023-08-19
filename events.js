@@ -1,3 +1,6 @@
+import { render } from './render.js';
+import { comInputElement } from './dom.js';
+
 export const like = (coments) => {
     const likeButtons = document.querySelectorAll('.like-button');
       for(const like of likeButtons){
@@ -13,7 +16,7 @@ export const like = (coments) => {
               com.isLiked = false
               com.likes--;
           }
-          render(); 
+          render(coments); 
           });
         }
       };
@@ -23,7 +26,7 @@ export  const quote = (coments) => {
     coment.forEach((coment, index) => {
       coment.addEventListener('click', () => {
         comInputElement.value = '>'+ ' ' + coments[index].text + ' (' + coments[index].author.name + ')';
-        render();
+        render(coments);
       })
     })
   }
