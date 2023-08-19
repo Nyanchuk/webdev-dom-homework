@@ -1,4 +1,5 @@
-import { listElement } from './dom-elements.js';
+// import { listElement } from './main.js';
+// import { coments } from './api.js';
 
 export const like = () => {
     const likeButtons = document.querySelectorAll('.like-button');
@@ -30,7 +31,7 @@ export const quote = () => {
     })
   }
 
-export const render = () => {
+export const render = (coments, listElement, like, quote) => {
     const comHtml = coments.map((coment, index) => {
       const commentDate = new Date(coment.date);
       const timeDate = commentDate.toLocaleDateString() + ' ' +commentDate.getHours() + ':' + commentDate.getMinutes();
@@ -56,4 +57,5 @@ export const render = () => {
     like();
     quote()
   };
-  
+
+

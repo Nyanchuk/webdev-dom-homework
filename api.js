@@ -1,4 +1,4 @@
-import { buttonElement, loadingElement } from './dom-elements.js';
+import { buttonElement, loadingElement} from './dom.js';
 
 export const getAPI = () => {
     fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
@@ -7,18 +7,18 @@ export const getAPI = () => {
         .then((response) => response.json())
         .then((responseData) => {
             console.log(responseData);
+            let coments = [];
             coments = responseData.comments;
             buttonElement.disabled = false;
             buttonElement.textContent = "Написать";
             loadingElement.remove();
-            
           });
       };
 
 export const postAPI = (nameInputElement, comInputElement) => {
-        if(comInputElement.value.length < 3 || nameInputElement.value.length < 3) {
-            alert('Имя и комментарий должны быть не короче 3 символов');
-        }
+        // if(comInputElement.value.length < 3 || nameInputElement.value.length < 3) {
+        //     alert('Имя и комментарий должны быть не короче 3 символов');
+        // }
         fetch("https://wedev-api.sky.pro/api/v1/:julya-nyanchuk/comments", {
         method: "POST",
         body: JSON.stringify({
@@ -66,5 +66,3 @@ export const postAPI = (nameInputElement, comInputElement) => {
         console.warn(error);
     })
     };
-
-export let coments = [];

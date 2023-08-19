@@ -1,41 +1,58 @@
-// ЛОГИКА РАЗДЕЛЕНИЯ:
-// dom-elements.js: для хранения элементов DOM.
-// api.js: для функций, работающих с API (getAPI и postAPI).
-// events.js: для обработчиков событий, связанных с интерфейсом (like, quote, render).
-// main.js: для импорта остальных модулей и вызова основной логики.
-
 import {
-    buttonElement,
-    nameInputElement,
-    comInputElement,
-  } from './dom-elements.js';
-  import { getAPI, postAPI } from './api.js';
-  import { coments } from './api.js';
-  import { like, quote, render } from './events.js';
-  
-  render();
-  getAPI();
-  
-  // Обработка клика на кнопке отправки комментария
-     buttonElement.addEventListener('click' , () => {
-        nameInputElement.classList.remove('error');
-        if(nameInputElement.value === "" || comInputElement.value === "") {
-            comInputElement.classList.add('error');
-            nameInputElement.classList.add('error');
-            return;
-        } 
-        comInputElement.classList.remove('error');
-        //Открытие события при отправке комментария
-        buttonElement.disabled = true;
-        buttonElement.textContent = "Ваш комментарий добавлятся...";
+  buttonElement,
+  listElement,
+  nameInputElement,
+  comInputElement,
+  comentElement,
+  loadingElement,
+} from './dom.js';
 
-        function date(newDate) {
-            let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
-            return fullHour;
-            }
-        date(new Date())
-        postAPI(nameInputElement, comInputElement);
-    });
+import { getAPI, postAPI } from './api.js';
+import { like, quote, render } from './events.js';
+
+let coments = [];
+
+getAPI();
+
+buttonElement.addEventListener('click' , () => {
+          nameInputElement.classList.remove('error');
+          if(nameInputElement.value === "" || comInputElement.value === "") {
+              comInputElement.classList.add('error');
+              nameInputElement.classList.add('error');
+              return;
+          } 
+          comInputElement.classList.remove('error');
+          //Открытие события при отправке комментария
+          buttonElement.disabled = true;
+          buttonElement.textContent = "Ваш комментарий добавлятся...";
+  
+          function date(newDate) {
+              let fullHour = newDate.toLocaleDateString() + " " + newDate.getHours() + ":"+ newDate.getMinutes();
+              return fullHour;
+              }
+          date(new Date())
+          postAPI(nameInputElement, comInputElement);
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
