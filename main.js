@@ -1,37 +1,21 @@
 import { getAPI } from './api.js';
-import { initClickHandler } from './render.js';
+import { renderLogin } from './loginPage.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('root');
-  root.innerHTML = `
-    <div class="container">
-      <div class="loader">Пожалуйста подождите, комментарии загружаются...</div>
-      <ul class="comments" id="list">
-      </ul>
-      <div class="add-form">
-        <input
-          id="name-input"
-          type="text"
-          class="add-form-name"
-          placeholder="Введите ваше имя"
-        />
-        <textarea
-          id="com-input"
-          value=" "
-          type="textarea"
-          class="add-form-text"
-          placeholder="Введите ваш коментарий"
-          rows="4"
-        ></textarea>
-        <div class="add-form-row">
-          <button class="add-form-button" id="add-button">Написать</button>
-        </div>
-      </div>
-    </div>
-  `;
-  getAPI();
-  initClickHandler();
-});
+
+renderLogin({ getAPI });
+
+ 
+
+
+
+
+
+
+
+
+
+
+
 
 
 

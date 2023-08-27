@@ -1,13 +1,15 @@
-import { listElement } from './dom.js';
 import { like, quote } from './events.js';
-import { buttonElement, nameInputElement, comInputElement } from './dom.js';
 import { postAPI } from './api.js';
+import { buttonElement } from './dom.js';
+
 
 const render = (coments) => {
+  const rootElement = document.getElementById('root')
     const comHtml = coments.map((coment, index) => {
       const commentDate = new Date(coment.date);
       const timeDate = commentDate.toLocaleDateString() + ' ' +commentDate.getHours() + ':' + commentDate.getMinutes();
-      return `<li class="comment" >
+      return `
+      <li class="comment" >
         <div class="comment-header">
           <div>${coment.author.name}</div>
           <div>${timeDate}</div>
@@ -25,14 +27,46 @@ const render = (coments) => {
         </div>
       </li>`
      }).join('');
-    listElement.innerHTML = comHtml;
+     
+
+     const rootHtml = `<div class="container">
+     <ul class="comments" id="list">${comHtml}</ul>
+     <div class="add-form">
+       <input
+         id="name-input"
+         type="text"
+         class="add-form-name"
+         placeholder="Введите ваше имя"
+       />
+       <textarea
+         id="com-input"
+         value=" "
+         type="textarea"
+         class="add-form-text"
+         placeholder="Введите ваш коментарий"
+         rows="4"
+       ></textarea>
+       <div class="add-form-row">
+         <button class="add-form-button" id="add-button">Написать</button>
+       </div>
+     </div>
+   </div>`
+
+    // const listElement = document.getElementById("list");
+    
+    rootElement.innerHTML = rootHtml;
     like(coments);
     quote(coments);
+    initClickHandler();
   };
 
 export { render };
 
 const initClickHandler = () => {
+  const buttonElement = document.getElementById('add-button');
+  const nameInputElement = document.getElementById('name-input');
+  const comInputElement = document.getElementById('com-input');
+
     buttonElement.addEventListener('click', () => {
       nameInputElement.classList.remove('error');
       if (nameInputElement.value === '' || comInputElement.value === '') {
@@ -43,7 +77,7 @@ const initClickHandler = () => {
       comInputElement.classList.remove('error');
       buttonElement.disabled = true;
       buttonElement.textContent = 'Ваш комментарий добавляется...';
-  
+
       function date(newDate) {
         let fullHour = newDate.toLocaleDateString() + ' ' + newDate.getHours() + ':' + newDate.getMinutes();
         return fullHour;
@@ -52,8 +86,8 @@ const initClickHandler = () => {
       postAPI(nameInputElement, comInputElement);
     });
   };
-  
-  export { initClickHandler };
+
+
 
 
 
