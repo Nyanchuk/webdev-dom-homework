@@ -52,20 +52,17 @@ buttonEl.addEventListener('click', () => {
         name: name,
         login: login,
         password: password,
+      }).then((user) => {
 
-      })
-    //   .then((user) => {
-
-    //     console.log(user.user.name)
-    //     setToken(`Bearer ${user.user.token}`)
-    //     console.log(token);
-    //   })
-      .then(() => {
+        console.log(user.user.name)
+        setToken(`Bearer ${user.user.token}`)
+        console.log(token);
+      }).then(() => {
         getAPI(); 
     })
-    .catch(error => {
-        alert(error.message)
-      })
+    // .catch(error => {
+    //     alert(error.message)
+    //   })
 })
 
 

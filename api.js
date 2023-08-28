@@ -21,7 +21,6 @@ export const getAPI = () => {
         const coments = responseData.comments;
         render(coments);
       });
-  // } 
 };
  
 export const postAPI = (nameInputElement, comInputElement) => {
@@ -45,6 +44,8 @@ export const postAPI = (nameInputElement, comInputElement) => {
             throw new Error("BadRequest: " + errorData.message);
           } else if (response.status === 500) {
             throw new Error("ServerUnavailable: Непредвиденная ошибка сервера");
+          } else if (response.status === 401) {
+            throw new Error("Нет авторизации!");
           } else {
             throw new Error("ServerError: Сервер упал");
           }
