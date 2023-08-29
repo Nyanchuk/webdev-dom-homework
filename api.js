@@ -1,12 +1,22 @@
-import { buttonElement } from './dom.js';
 import { render } from './render.js';
 
 const todosURL = 'https://wedev-api.sky.pro/api/v2/:julya-nyanchuk/comments';
 
+//СБРОС ТОКЕНА
+export const resetToken = () => {
+  token = null;
+};
+//НОВЫЙ ТОКЕН
 export let token ;
 export const setToken = (newToken) => {
   token = newToken;
 }
+//НОВОЕ ИМЯ
+export let name ;
+export const setName = (newName) => {
+  name = newName;
+}
+
 
 export const getAPI = () => {
     return fetch(todosURL, {
@@ -57,8 +67,8 @@ export const postAPI = (nameInputElement, comInputElement) => {
       getAPI();
     })
     .catch((error) => {
-      buttonElement.disabled = false;
-      buttonElement.textContent = "Написать";
+      // buttonElement.disabled = false;
+      // buttonElement.textContent = "Написать";
       
       const errorMessage = error.message;
 

@@ -1,7 +1,9 @@
 import { like, quote } from './events.js';
 import { postAPI } from './api.js';
-import { buttonElement } from './dom.js';
-
+import { name } from './api.js';
+import { renderLogin } from './loginPage.js';
+import { getAPI, resetToken } from './api.js';
+import { token } from './api.js';
 
 const render = (coments) => {
   const rootElement = document.getElementById('root')
@@ -27,16 +29,16 @@ const render = (coments) => {
         </div>
       </li>`
      }).join('');
-     
 
      const rootHtml = `<div class="container">
      <ul class="comments" id="list">${comHtml}</ul>
      <div class="add-form">
        <input
+        value = "${name}"
          id="name-input"
          type="text"
          class="add-form-name"
-         placeholder="Введите ваше имя"
+         placeholder="Введите ваше имя" disabled
        />
        <textarea
          id="com-input"
@@ -48,32 +50,47 @@ const render = (coments) => {
        ></textarea>
        <div class="add-form-row">
          <button class="add-form-button" id="add-button">Написать</button>
+         
        </div>
      </div>
+     <button class="exit-button" id="exit">Выход на страницу авторизации</button>
    </div>`
-
-    // const listElement = document.getElementById("list");
-    
     rootElement.innerHTML = rootHtml;
     like(coments);
     quote(coments);
     initClickHandler();
+    exit({ getAPI });
   };
 
 export { render };
 
+// ВЫХОД НА СТРАНИЦУ АВТОРИЗАЦИИ И СБРОС ТОКЕНА
+const exit = ({ getAPI }) => {
+  const exitButton = document.getElementById('exit');
+  exitButton.addEventListener('click', () => {
+    resetToken();
+    renderLogin({ getAPI });
+  })
+}
+// ОТПРАВКА НОВОГО КОММЕНТАРИЯ
 const initClickHandler = () => {
   const buttonElement = document.getElementById('add-button');
   const nameInputElement = document.getElementById('name-input');
   const comInputElement = document.getElementById('com-input');
 
     buttonElement.addEventListener('click', () => {
+      if (!token) {
+        renderLogin({ getAPI });
+        return;
+      }
+
       nameInputElement.classList.remove('error');
       if (nameInputElement.value === '' || comInputElement.value === '') {
         comInputElement.classList.add('error');
         nameInputElement.classList.add('error');
         return;
       }
+      
       comInputElement.classList.remove('error');
       buttonElement.disabled = true;
       buttonElement.textContent = 'Ваш комментарий добавляется...';

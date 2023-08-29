@@ -1,5 +1,6 @@
 import { loginUser, setToken, token } from './api.js';
 import { regLogin } from './regPage.js';
+import { setName } from './api.js';
 
 export const renderLogin = ({ getAPI }) => {
     const rootElement = document.getElementById('root')
@@ -19,6 +20,7 @@ export const renderLogin = ({ getAPI }) => {
             <button class="reg__button" id="button_reg">Регистрация</button>
             </div> 
         </div>
+        <button class="chek__button" id="button__not_reg">Продолжить без регистрации</button>
         </div>` 
     rootElement.innerHTML = loginHtml;
 
@@ -26,22 +28,29 @@ const buttonLogin = document.getElementById('button');
 const loginElement = document.getElementById('login');
 const passwordElement = document.getElementById('password');
 const buttonReg = document.getElementById('button_reg');
+const buttonNotReg = document.getElementById('button__not_reg');
 
+// КЛИК по кнопке "РЕГИСТРАЦИЯ"
 buttonReg.addEventListener('click', () => {
     regLogin({ getAPI })
 })
-
+// КЛИК по кнопке "ВОЙТИ"
 buttonLogin.addEventListener('click', () => {
     loginUser({
         login: loginElement.value,
         password: passwordElement.value,
     }).then((responseData) => {
-        console.log(token);
+        setName(responseData.user.name)
         setToken(responseData.user.token);
         console.log(token);
     }).then(() => {
         getAPI(); 
     })
+})
+
+// КЛИК по кнопке "ПРОДОЛЖИТЬ БЕЗ РЕГИСТРАЦИИ"
+buttonNotReg.addEventListener('click', () => {
+    getAPI();
 })
 }
 

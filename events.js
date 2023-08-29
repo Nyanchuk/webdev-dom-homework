@@ -22,6 +22,7 @@ export const like = (coments) => {
       };
 
 export const quote = (coments) => {
+  // const comInputElement = document.getElementById("com-input");
     const coment = document.querySelectorAll('.comment');
     coment.forEach((coment, index) => {
       coment.addEventListener('click', () => {

@@ -1,5 +1,8 @@
 import { renderLogin } from './loginPage.js';
 import { registerUser, setToken, token } from './api.js';
+import { setName, name } from './api.js';
+
+
 
 export const regLogin = ({ getAPI }) => {
     const rootElement = document.getElementById('root')
@@ -29,8 +32,8 @@ export const regLogin = ({ getAPI }) => {
     })
 
 // Клик по кнопке "Создать аккаунт"
-const buttonEl = document.getElementById('login-button')
-buttonEl.addEventListener('click', () => {
+    const buttonEl = document.getElementById('login-button')
+    buttonEl.addEventListener('click', () => {
     const name = document.getElementById('name-input').value;
     const login = document.getElementById('login-input').value;
     const password = document.getElementById('password-input').value;
@@ -48,22 +51,24 @@ buttonEl.addEventListener('click', () => {
         return;
       }
 
-      registerUser({
+    registerUser({
         name: name,
         login: login,
         password: password,
       }).then((user) => {
 
         console.log(user.user.name)
-        setToken(`Bearer ${user.user.token}`)
+
+        setName(user.user.name)
+        setToken(user.user.token)
         console.log(token);
       }).then(() => {
         getAPI(); 
     })
-    // .catch(error => {
-    //     alert(error.message)
-    //   })
-})
+    })
+}
+
+
 
 
 
@@ -111,4 +116,3 @@ buttonEl.addEventListener('click', () => {
     //     console.log(users);
     //     getAPI();
     // })
-}
