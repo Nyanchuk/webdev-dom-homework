@@ -10,7 +10,7 @@ import { format } from "date-fns";
 const render = (coments) => {
   const rootElement = document.getElementById('root')
     const comHtml = coments.map((coment, index) => {
-      const createDate = format(new Date(coment.date), 'dd/MM/yyyy hh:mm');
+      const createDate = format(new Date(coment.date), 'yyyy-MM-dd hh.mm.ss');
       return `
       <li class="comment" >
         <div class="comment-header">
