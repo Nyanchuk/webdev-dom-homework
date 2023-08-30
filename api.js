@@ -17,7 +17,6 @@ export const setName = (newName) => {
   name = newName;
 }
 
-
 export const getAPI = () => {
     return fetch(todosURL, {
       method: "GET",

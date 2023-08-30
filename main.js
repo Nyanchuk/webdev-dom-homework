@@ -1,7 +1,6 @@
 import { getAPI } from './api.js';
 import { renderLogin } from './loginPage.js';
 
-
 renderLogin({ getAPI });
 
  

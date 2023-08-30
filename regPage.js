@@ -1,6 +1,7 @@
 import { renderLogin } from './loginPage.js';
 import { registerUser, setToken, token } from './api.js';
 import { setName, name } from './api.js';
+import _ from 'lodash';
 
 
 
@@ -52,14 +53,15 @@ export const regLogin = ({ getAPI }) => {
       }
 
     registerUser({
-        name: name,
+        // name: name,
+        name: _.capitalize(name),
         login: login,
         password: password,
       }).then((user) => {
 
         console.log(user.user.name)
 
-        setName(user.user.name)
+        setName(_.capitalize(user.user.name))
         setToken(user.user.token)
         console.log(token);
       }).then(() => {

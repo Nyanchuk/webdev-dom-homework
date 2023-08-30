@@ -4,17 +4,18 @@ import { name } from './api.js';
 import { renderLogin } from './loginPage.js';
 import { getAPI, resetToken } from './api.js';
 import { token } from './api.js';
+import { format } from "date-fns";
+
 
 const render = (coments) => {
   const rootElement = document.getElementById('root')
     const comHtml = coments.map((coment, index) => {
-      const commentDate = new Date(coment.date);
-      const timeDate = commentDate.toLocaleDateString() + ' ' +commentDate.getHours() + ':' + commentDate.getMinutes();
+      const createDate = format(new Date(coment.date), 'dd/MM/yyyy hh:mm');
       return `
       <li class="comment" >
         <div class="comment-header">
           <div>${coment.author.name}</div>
-          <div>${timeDate}</div>
+          <div>${createDate}</div>
         </div>
         <div class="comment-body">
           <div class="comment-text">
@@ -95,11 +96,6 @@ const initClickHandler = () => {
       buttonElement.disabled = true;
       buttonElement.textContent = 'Ваш комментарий добавляется...';
 
-      function date(newDate) {
-        let fullHour = newDate.toLocaleDateString() + ' ' + newDate.getHours() + ':' + newDate.getMinutes();
-        return fullHour;
-      }
-      date(new Date());
       postAPI(nameInputElement, comInputElement);
     });
   };
